@@ -16,7 +16,13 @@ export default class TodoInput extends Component {
                      value={item}
                      onChange={handleChange}/>
                   </div>
-                  <button type="submit" className='btn btn-block btn-primary mt-3 text-uppercase'>add item</button>
+         <button type="submit" 
+         disabled={item?false:true}
+         className={editItem ?"btn btn-block w-100 btn-success mt-3 text-uppercase":"btn btn-block w-100 btn-primary mt-3 text-uppercase"}>
+             
+             {editItem ?'edit item':'add item'}
+             
+             </button>
 
               </form>
           </div>

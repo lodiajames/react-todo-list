@@ -1,4 +1,4 @@
-import { logDOM } from '@testing-library/dom';
+// import { logDOM } from '@testing-library/dom';
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TodoInput from './components/TodoInput';
@@ -29,16 +29,28 @@ export default class App extends Component {
      item:'',
      id:uuidv4(),
      editItem:false
-   },()=>console.log(this.state))
+   })
   }
   clearList=(e)=>{
-    console.log('clear list')
+    this.setState({
+      items:[]
+    })
   }
   handleDelete =(id)=>{
-    console.log('handle edit ${id}')
+    const filteredItems = this.state.items.filter(item=>item.id!==id);
+    this.setState({
+      items:filteredItems
+    });
   }
   handleEdit =(id)=>{
-    console.log('edit ${id}')
+  const filteredItems = this.state.items.filter(item=>item.id!==id);
+    const selectedItem = this.state.items.find(item=>item.id===id); 
+   this.setState({
+     items: filteredItems,
+     item:selectedItem.title,
+     id:id,
+     editItem:true
+   })
   }
   render() {
   
@@ -49,7 +61,7 @@ export default class App extends Component {
              <h3 className='text-capitalize text-center'>todo input</h3>
              <TodoInput  item={this.state.item} handleChange={this.handleChange} handleSubmit={this.handleSubmit}
              editItem={this.state.editItem}/>
-             <TodoList  items={this.state.items} clearList={this.clearList} handleDelete={this.handleEdit}
+             <TodoList  items={this.state.items} clearList={this.clearList} handleDelete={this.handleDelete}
              handleEdit={this.handleEdit}/>
              
            </div>
